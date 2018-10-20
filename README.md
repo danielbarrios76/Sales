@@ -19,3 +19,7 @@ C# Project in Visual Studio
 - EntityFrameworkCore.Tools 2.1.4
 
 - EntityFrameworkCore.SqlServer.Design 1.1.6
+
+- Extension.Configuration.FileExtension
+
+- Extension.Configuration.Json
