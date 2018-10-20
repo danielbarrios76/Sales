@@ -1,27 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace DAL
 {
-    public class Products
+    public class Products : BaseDAL
     {
-        private readonly DbContextOptions _options;
-
-        public Products()
-        {
-            _options = new DbContextOptionsBuilder()
-                .UseSqlServer("Server=.\\SQLEXPRESS;Database=SalesDB;User ID=sa;Password=1234")
-                .Options;
-            
-        }
-
+ 
         public List<Entities.Products> GetProducts()
         {
             List<Entities.Products> productsList = null;
 
 
-            using (var context = new Models.SalesDBContext(_options))
+            using (var context = new Models.SalesDBContext(Options))
             {
                 productsList = context.Products.OrderBy(x => x.ProductName).ToList();
             }
@@ -33,12 +23,36 @@ namespace DAL
         {
             Entities.Products product = null;
 
-            using (var context = new Models.SalesDBContext(_options))
+            using (var context = new Models.SalesDBContext(Options))
             {
                 product = context.Products.FirstOrDefault(x => x.Id == ID);
             }
             return product;
                 
+        }
+
+        public Entities.Products AddProduct(Entities.Products product)
+        {
+            using (var context = new Models.SalesDBContext(Options))
+            {
+                context.Products.Add(product);
+                context.SaveChanges();
+            }
+            return product;
+        }
+
+        public Entities.Products RemoveProduct(int ID)
+        {
+            Entities.Products product;
+
+            using (var context = new Models.SalesDBContext(Options))
+            {
+                product = context.Products.FirstOrDefault(p => p.Id == ID);
+                context.Products.Remove(product);
+                context.SaveChanges();
+            }
+
+            return product;
         }
     }
 }

@@ -19,6 +19,21 @@ namespace BLL
             return products.GetProducts();
         }
 
+        public Entities.Products AddProduct(Entities.Products product)
+        {
+            DAL.Products products = new DAL.Products();
+            products.AddProduct(product);
+            return product;
+        }
+
+        public Entities.Products RemoveProduct(int ID)
+        {
+            DAL.Products products = new DAL.Products();
+            Entities.Products product;
+            product = products.RemoveProduct(ID);
+            return product;
+        }
+
         public override string ToString()
         {
             string value = string.Empty;
