@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DAL.Models
+﻿namespace Entities
 {
     public partial class Products
     {

@@ -1,19 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
     public class Products
     {
-        
-        public List<Models.Products> GetProducts()
+        private readonly DbContextOptions _options;
+
+        public Products()
         {
-            List<Models.Products> productsList = null;
-            using (var context = new Models.SalesDBContext())
+            _options = new DbContextOptionsBuilder()
+                .UseSqlServer("Server=.\\SQLEXPRESS;Database=SalesDB;User ID=sa;Password=1234")
+                .Options;
+            
+        }
+
+        public List<Entities.Products> GetProducts()
+        {
+            List<Entities.Products> productsList = null;
+
+
+            using (var context = new Models.SalesDBContext(_options))
             {
                 productsList = context.Products.OrderBy(x => x.ProductName).ToList();
             }
@@ -21,10 +29,11 @@ namespace DAL
             
         }
 
-        public Models.Products GetProductByID(int ID)
+        public Entities.Products GetProductByID(int ID)
         {
-            Models.Products product = null;
-            using (var context = new Models.SalesDBContext())
+            Entities.Products product = null;
+
+            using (var context = new Models.SalesDBContext(_options))
             {
                 product = context.Products.FirstOrDefault(x => x.Id == ID);
             }
