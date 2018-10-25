@@ -21,7 +21,7 @@ namespace DAL
         private string GetConnectionString()
         {
             var builder = new ConfigurationBuilder()            
-            .SetBasePath(Directory.GetCurrentDirectory())
+            .SetBasePath("D:\\Projects\\Sales\\DAL")
             .AddJsonFile("config.json");
 
             Configuration = builder.Build();
